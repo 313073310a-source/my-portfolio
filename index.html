@@ -329,7 +329,7 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:8000;o
 .lb-bg{position:absolute;inset:0;background:rgba(4,3,3,.97);backdrop-filter:blur(24px) saturate(.8)}
 .lb-wrap{position:relative;z-index:2;display:flex;gap:40px;align-items:center;max-width:90vw;max-height:90vh}
 .lb-img{flex-shrink:0}
-.lb-img img{max-width:72vw;max-height:80vh;width:auto;height:auto;object-fit:contain;display:block;box-shadow:0 40px 120px rgba(0,0,0,.95);border-radius:var(--ri)}
+.lb-img img{max-width:72vw;max-height:80vh;width:auto;height:auto;object-fit:contain;display:block;box-shadow:0 40px 120px rgba(0,0,0,.95);border-radius:var(--ri);touch-action:pinch-zoom;}
 .lb-side{width:176px;flex-shrink:0;padding-top:2px}
 .lb-idx{font-family:'Jost',sans-serif;font-weight:400;font-size:.52rem;letter-spacing:.36em;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
 .lb-title{font-family:'ZCOOL QingKe HuangYou',serif;font-size:1.45rem;color:var(--cream);letter-spacing:.06em;line-height:1.25;margin-bottom:5px}
@@ -1335,10 +1335,12 @@ document.querySelectorAll('.blog-post img').forEach(function(img){
   img.style.cursor='zoom-in';
   img.addEventListener('click',function(){
     var overlay=document.createElement('div');
-    overlay.style.cssText='position:fixed;inset:0;z-index:9000;background:rgba(0,0,0,.95);display:flex;align-items:center;justify-content:center;';
+   overlay.style.cssText='position:fixed;inset:0;z-index:9000;background:rgba(0,0,0,.95);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .35s ease;';
+setTimeout(function(){overlay.style.opacity='1';},10);
     var clone=document.createElement('img');
     clone.src=img.src;
-    clone.style.cssText='max-width:95vw;max-height:92vh;object-fit:contain;border-radius:10px;touch-action:pinch-zoom;user-select:none;-webkit-user-select:none;';
+   clone.style.cssText='max-width:95vw;max-height:92vh;object-fit:contain;border-radius:10px;touch-action:pinch-zoom;user-select:none;-webkit-user-select:none;opacity:0;transition:opacity .35s ease;';
+setTimeout(function(){clone.style.opacity='1';},10);
     clone.addEventListener('contextmenu',function(e){e.preventDefault();});
     overlay.appendChild(clone);
     overlay.addEventListener('click',function(){document.body.removeChild(overlay);});
