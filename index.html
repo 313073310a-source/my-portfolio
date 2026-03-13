@@ -1791,6 +1791,7 @@ document.addEventListener('keydown', function(e){
       dyAcc=0;
       return;
     }
+    if(window._lbScale > 1.05){ return; }
     if(swDir!=='h'){return;}
     var dx = e.changedTouches[0].clientX - sx;
     if(Math.abs(dx) < 50) return;
@@ -1810,7 +1811,9 @@ document.addEventListener('keydown', function(e){
   // Pinch to zoom
 (function(){
   var lbImg = document.getElementById('lbImg');
-  var lbScale = 1, initDist = 0, initScale = 1;
+  var initDist = 0, initScale = 1;
+  if(!window._lbScale) window._lbScale = 1;
+  var lbScale = 1;
 
   function getDist(t){
     var dx = t[0].clientX - t[1].clientX;
@@ -1829,7 +1832,10 @@ document.addEventListener('keydown', function(e){
     if(e.touches.length === 2){
       e.preventDefault();
       var newDist = getDist(e.touches);
-      lbScale = Math.min(Math.max(initScale * (newDist / initDist), 1), 4);
+      lbScale = window._lbScale = Math.min(Math.max(initScale * (newDist / initDist), 1), 4);
+      var originX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
+      var originY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
+      lbImg.style.transformOrigin = originX + 'px ' + originY + 'px';
       lbImg.style.transition = 'none';
       lbImg.style.transform = 'scale(' + lbScale + ')';
     }
@@ -1837,7 +1843,7 @@ document.addEventListener('keydown', function(e){
 
   lb.addEventListener('touchend', function(e){
     if(e.touches.length < 2 && lbScale < 1.15){
-      lbScale = 1;
+      lbScale = window._lbScale = 1;
       lbImg.style.transition = 'transform 0.3s cubic-bezier(0.34,1.56,0.64,1)';
       lbImg.style.transform = 'scale(1)';
     }
