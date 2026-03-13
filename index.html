@@ -1567,6 +1567,7 @@ var curLbIdx = 0;
 var _lbPre   = null;
 var _lbTmr   = null;
 var _lbCloseTmr = null;
+var _lbCloseTmr = null;
 
 function getSiblings(){
   var panel=document.querySelector('.panel.on');
@@ -1685,6 +1686,7 @@ function openLb(idx){
   var img   = document.getElementById('lbImg');
   var side  = document.getElementById('lbSide');
   // 清空舊圖，確保不顯示任何殘留
+  if(_lbCloseTmr){ clearTimeout(_lbCloseTmr); _lbCloseTmr = null; }
   _lbStop();
   img.classList.remove('lb-fadein');
   img.src = '';
