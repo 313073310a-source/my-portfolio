@@ -1,1 +1,1 @@
-wecolme to my blog and memorys of me 🚀✨🪐
+welcome to my blog and memorys of me 🚀✨🪐
